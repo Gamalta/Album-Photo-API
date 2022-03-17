@@ -166,7 +166,7 @@ class Picture {
             $db->query("DELETE FROM picture WHERE uuid='$uuid'");
 
         } else {
-            throw new Exception("API- Suppresion d'image invalide uuid");
+            throw new Exception("API- Suppression d'image uuid invalide");
         }
     }
 }

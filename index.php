@@ -71,7 +71,7 @@ try {
                             //remove user
                             break;
                         default:
-                            throw new Exception("API- Mauvaise méthode utilisé");
+                            throw new Exception("API- Mauvaise méthode utilisée.");
                     }
                     break;
     
@@ -97,7 +97,7 @@ try {
                             //remove tag
                             break;
                         default:
-                            throw new Exception("API- Mauvaise méthode utilisé");
+                            throw new Exception("API- Mauvaise méthode utilisée.");
                     }
     
                     break;
@@ -121,13 +121,13 @@ try {
                             $picture->removePicture($db);
                             break;
                         default:
-                            throw new Exception("API- Mauvaise méthode utilisé");
+                            throw new Exception("API- Mauvaise méthode utilisée.");
                     }
                     break;
                 default: throw new Exception("API- La demande n'est pas valide, vérifiez l'url.");
             }
         } else {
-            throw new Exception("API- La connexion à échoué.");
+            throw new Exception("API- La connexion a échoué.");
         }
     } else {
         throw new Exception("API- Problème de récupération de données.");
