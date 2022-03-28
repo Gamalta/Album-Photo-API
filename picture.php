@@ -1,7 +1,6 @@
 <?php
 class Picture {
     static $dateFormat = "Y-m-d";
-    static $reponseHeader = "Content-Type: application/json";
 
     function addPicture($db, $jsonObject){
 
@@ -95,14 +94,33 @@ class Picture {
         }
         $stmt = null;
         if(empty($condition)){
-            $stmt = $db->query("SELECT uuid from picture");
+            $stmt = $db->query("SELECT uuid, date, author from picture");
         } else {
-            $stmt = $db->query("SELECT uuid from picture inner join picture_tag on picture.uuid = picture_tag.picture where ". implode(' and ', $condition));
+            $stmt = $db->query("SELECT uuid, date, author from picture inner join picture_tag on picture.uuid = picture_tag.picture where ". implode(' and ', $condition));
         }
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        header(self::$reponseHeader);
-        echo json_encode(array('pictures' => $result));
+
+        $response = [];
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $stmt -> closeCursor();
+        foreach($results as $result){
+
+            $date = new DateTime($result['date']);
+            $date->format("U");
+            $uuid = $result['uuid'];
+            $stmt = $db->query("SELECT tag from picture_tag where picture = '$uuid'");
+            $tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt -> closeCursor();
+
+            array_push($response, array(
+                "uuid"=> $result['uuid'],
+                "tags"=> json_encode($tags),
+                "date"=> $date->getTimestamp(),
+                "author"=> $result['author']
+            ));
+        }
+
+        $stmt -> closeCursor();
+        echo json_encode(array('pictures' => $response));
     }
 
     function getMiniatureByUniqueId($db, $uuid){
@@ -119,7 +137,7 @@ class Picture {
         $date->format("U");
 
         $json = array(
-            "uuid"=> $result['uuid'],
+            "uuid"=> $uuid,
             "image"=> base64_encode($img),
             "tags"=> json_encode($tags),
             "date"=> $date->getTimestamp(),
