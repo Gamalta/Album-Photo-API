@@ -15,7 +15,7 @@ class Database {
         define('DB_PORT', 3306);
         define('DB_NAME', 'Site');
         define('DB_USER', 'root');
-        define('DB_PASS', 'Kodak2019');
+        define('DB_PASS', 'pas de mots de passe');
         $dsn = DB_DRIVER.":dbname=".DB_NAME.";host=".DB_HOST.";port=".DB_PORT.";";
         
         try {
