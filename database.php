@@ -11,7 +11,7 @@ class Database {
         }
 
         define('DB_DRIVER', 'mysql');
-        define('DB_HOST', 'save.redblock.fr');
+        define('DB_HOST', 'host.fr');
         define('DB_PORT', 3306);
         define('DB_NAME', 'Site');
         define('DB_USER', 'root');
